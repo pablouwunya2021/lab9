@@ -21,17 +21,19 @@ class SistemaViajes:
 
     def mapa_destinos(self, estacion_salida):
         destinos = list(self.grafo.neighbors(estacion_salida))
-        print(f"Posibles destinos desde {estacion_salida}:")
+        texto_destinos = f"Posibles destinos desde {estacion_salida}:\n"
         for destino in destinos:
-            print(destino)
+            texto_destinos += f"{destino}\n"
+        return texto_destinos
 
     def dijkstra(self, estacion_salida):
         distancias = nx.single_source_dijkstra_path_length(self.grafo, estacion_salida)
         rutas = nx.single_source_dijkstra_path(self.grafo, estacion_salida)
-        print("Mejores rutas desde", estacion_salida)
+        texto_rutas = f"Mejores rutas desde {estacion_salida}:\n"
         for destino in distancias:
             if destino != estacion_salida:
-                print(f"Destino: {destino}, Costo: {distancias[destino]}, Ruta: {rutas[destino]}")
+                texto_rutas += f"Destino: {destino}, Costo: {distancias[destino]}, Ruta: {rutas[destino]}\n"
+        return texto_rutas
 
 class Programa:
     def __init__(self):
@@ -45,10 +47,11 @@ class Programa:
             print("La estación de salida no existe en el sistema.")
         else:
             self.sistema.mostrar_grafo()
-            self.sistema.mapa_destinos(estacion_salida)
-            self.sistema.dijkstra(estacion_salida)
+            print(self.sistema.mapa_destinos(estacion_salida))
+            print(self.sistema.dijkstra(estacion_salida))
 
 if __name__ == "__main__":
     programa = Programa()
     programa.ejecutar()
+    
 
